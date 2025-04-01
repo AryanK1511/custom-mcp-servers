@@ -45,19 +45,3 @@ class RaspberryPiAdapter:
         output = stdout.read().decode()
         error = stderr.read().decode()
         return output, error
-
-    def create_file(self, filepath: str) -> None:
-        try:
-            self.connect()
-            CustomLogger.create_log("info", f"Creating file at path: {filepath}")
-
-            command = f"touch {filepath}"
-            output, error = self.execute_command(command)
-
-            if error:
-                CustomLogger.create_log("error", f"Failed to create file: {error}")
-                raise Exception(f"Failed to create file: {error}")
-
-            CustomLogger.create_log("info", f"File created successfully at {filepath}")
-        finally:
-            self.disconnect()
